@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+</head>
+<body>
+    <table width="100%" cellpadding="0" cellspacing="5" >
+        <tr>
+            <td align="center">
+                <!-- Header -->
+                <table width="80%" style="border:1px solid #e2e2e2">
+                    <tr>
+                        <td>
+                            <h4>{{title}}</h4>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <br />                
+                <!-- Contents -->
+                <table width="60%" style="border-top: 1px solid #e2e2e2">
+                    <tr>
+                        <td valign="top" width="40%">
+                            <table  width="100%">
+                                <tr>
+                                    <td>
+                                        <b>Add Contact</b>
+                                        <br />
+                                        <br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <form action="/add_contact" method="POST">
+                                            <table  width="100%">
+                                                <tr>
+                                                    <td>
+                                                        Name:
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="name" name="name" placeholder="What's your name." />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Mobile:
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="mobile_number" name="mobile_number" placeholder="What's your Mobile Number." />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Email:
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="email" name="email" placeholder="What's your Email." />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" align="center">
+                                                        <input type="submit" id="submit" value="Add" alt="Add Contact"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td valign="top" width="60%" style="border-left:1px solid #e2e2e2">
+                            <table width="100%" >
+                                <tr>
+                                    <td>
+                                        <b>Contacts Details</b>
+                                        <br />
+                                        <br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table  width="100%" style="border:1px solid #e2e2e2">
+                                            <tr>
+                                                <td style="border-right:1px solid #e2e2e2">
+                                                    <b>ID</b>
+                                                </td>
+                                                <td style="border-right:1px solid #e2e2e2">
+                                                    <b>Name</b>
+                                                </td>
+                                                <td style="border-right:1px solid #e2e2e2">
+                                                    <b>Mobile</b>
+                                                </td>
+                                                <td style="border-right:1px solid #e2e2e2">
+                                                    <b>Email</b>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            
+                                            {{#each contacts}}
+                                            <tr>
+                                                <td style="border-right:1px solid #e2e2e2">{{this.id}}</td>
+                                                <td style="border-right:1px solid #e2e2e2">{{this.name}}</td>
+                                                <td style="border-right:1px solid #e2e2e2">{{this.mobile_number}}</td>
+                                                <td style="border-right:1px solid #e2e2e2">{{this.email}}</td>
+                                                <td><a href="/delete/{{this.id}}">Delete</a></td>
+                                            {{/each}}
+                                            </tr>
+                                        </table>
+                                        <br />                                        
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <!-- Footer -->
+                <br />
+                <br />
+                <table width="100%">
+                    <tr>
+                        <td align="center">
+                            <br />
+                            <hr />
+                            <p>
+                                A simple manage contact demo application. Read more about <a target="_blank" href={{author.details}}><b>{{author.name}}</b></a>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+               
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
