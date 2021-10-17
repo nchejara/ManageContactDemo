@@ -14,7 +14,7 @@ A simple Web demo application
     //node_module\.bin\mocha -R spec test\home-spec.js
 
 
-## Setup Database
+## Setup Database Manually
 1. Create a Role
 ```
 CREATE ROLE "Naren" WITH
@@ -38,5 +38,13 @@ CREATE DATABASE "manage_contacts" WITH
 
 ```
 
+## Create Tables using Sequelize
+Run the following commands (Note: Do not forget to create a "Naren" Role or change the available role in the config file)
+```
+    npm install -g sequelize-cli
+    sequelize db:create
+    sequelize db:migrate
+
+```
+
 # Reference
-https://scotch.io/tutorials/getting-started-with-node-express-and-postgres-using-sequelize

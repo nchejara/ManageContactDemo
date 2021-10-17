@@ -14,7 +14,7 @@ module.exports = function(app){
         contacts.findAll({attributes: ['id', 'name','email','mobile_number'], raw: true})
             .then(items => {
                 renderData.contacts = items;
-                console.log(renderData.contacts[0].name);
+                console.log(renderData.contacts);
                 res.status(200).render('index', renderData);
             })
             .catch(error => res.status(400).send(error));
