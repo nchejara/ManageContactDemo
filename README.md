@@ -1,50 +1,64 @@
 # ManageContactsDemo
 A simple Web demo application
 
-# Installation & start server
+# Setup Application using Docker
 
+Install Docker and docker-compose
 
-    $ npm install
-    $ npm start
-
-
-## Run sample test
-    $ mocha -R spec test/home-spec.js
-    //on windows
-    //node_module\.bin\mocha -R spec test\home-spec.js
-
-
-## Setup Database Manually
-1. Create a Role
+Export Database and application environments Variables
 ```
-CREATE ROLE "Naren" WITH
-	LOGIN
-	NOSUPERUSER
-	CREATEDB
-	NOCREATEROLE
-	INHERIT
-	NOREPLICATION
-	CONNECTION LIMIT 10
-	PASSWORD 'xxxxxx';
-GRANT postgres TO "Naren" WITH ADMIN OPTION;
+    export NODE_ENV=development
+    export DB_USERNAME=<username>
+    export DB_PASSWORD=<password>
+    export DB_DATABASE=manage_contacts
+    export DB_HOST=<docker host Machine IP>
+    export DB_PORT=5432
+    export PORT=3000
 
 ```
-2. Create a database
+
+Build Application and launch containers usinf docker-compose
 ```
-CREATE DATABASE "manage_contacts" WITH 
+    docker-compose up -d
+    // -d option will help to run container in dettached mode 
+
+```
+
+
+# Manual Configuration 
+
+Prepare database
+```
+    // Create Role
+    CREATE ROLE "Naren" WITH
+        LOGIN
+        NOSUPERUSER
+        CREATEDB
+        NOCREATEROLE
+        INHERIT
+        NOREPLICATION
+        CONNECTION LIMIT 10
+        PASSWORD 'xxxxxx';
+    GRANT postgres TO "Naren" WITH ADMIN OPTION;
+
+    // Create Data base
+    CREATE DATABASE "manage_contacts" WITH 
     OWNER = "Naren" 
     ENCODING = 'UTF8' 
     CONNECTION LIMIT = 10;
 
 ```
 
-## Create Tables using Sequelize
-Run the following commands (Note: Do not forget to create a "Naren" Role or change the available role in the config file)
+Inarall NPM Dependencies
 ```
     npm install -g sequelize-cli
-    sequelize db:create
-    sequelize db:migrate
+    npm install
+    npm start
 
 ```
-
-# Reference
+## Run sample test
+```
+    $ mocha -R spec test/home-spec.js
+    //on windows
+    //node_module\.bin\mocha -R spec test\home-spec.js
+```

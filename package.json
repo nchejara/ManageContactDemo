@@ -15,7 +15,8 @@
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.7.0",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "dotenv":"16.0.2"
   },
   "devDependencies": {
     "expect": "^27.2.5",
