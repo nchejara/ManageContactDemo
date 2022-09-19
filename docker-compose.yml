@@ -44,4 +44,4 @@ services:
       DB_HOST: ${DB_HOST}
       PORT: ${PORT}
     ports:
-      - "80:80"
+      - "${PORT}:${PORT}"
