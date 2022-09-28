@@ -1,0 +1,55 @@
+version: '3.8'
+networks:
+  mc_app:
+    driver: bridge
+
+services:
+  db:
+    container_name: mc_db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    networks:
+      - mc_app
+
+  pgadmin:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    # This container must be run after Depends container launch
+    depends_on:
+      - db
+    ports:
+      - "5050:80"
+    networks:
+      - mc_app
+
+  web:
+    # Build image from Dockerfile in different directory
+    build:
+      context: ..
+      args:
+        HTTP_PROXY: ${HTTP_PROXY}
+        HTTPS_PROXY: ${HTTPS_PROXY}
+    image: ${IMAGE_NAME}
+    container_name: mc_web
+    restart: always
+    # This container must be run after Depends containers launch
+    depends_on:
+      - db
+      - pgadmin
+    
+    ports:
+      - "3000:3000"
+      
+    # Define a custom network to allow container to communicate with thier name
+    networks:
+      - mc_app
