@@ -58,7 +58,10 @@ Inarall NPM Dependencies
 ```
 ## Run sample test
 ```
+    export HOST=<application_host_IP>
     $ mocha -R spec test/home-spec.js
     //on windows
+    // npm install
+    // set HOST=<application_host_IP>
     //node_module\.bin\mocha -R spec test\home-spec.js
 ```
