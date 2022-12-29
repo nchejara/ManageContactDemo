@@ -39,7 +39,15 @@ services:
       args:
         HTTP_PROXY: ${HTTP_PROXY}
         HTTPS_PROXY: ${HTTPS_PROXY}
+
     image: ${IMAGE_NAME}
+    # Environment variable pass to container
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_USERNAME: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_DATABASE: ${POSTGRES_DB}
+
     container_name: mc_web
     restart: always
     # This container must be run after Depends containers launch
