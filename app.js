@@ -39,7 +39,7 @@ models.sequelize.sync ({ force: true })
         console.log(result);
 
         // Start application 
-        var server = app.listen(app.get("port"), () => {
+        var server = app.listen(app.get("port"), "0.0.0.0", () => {
             console.log('The server is listening on port ' + server.address().port);        
         });
     })

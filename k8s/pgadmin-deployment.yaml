@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgadmin-deployment
+  labels:
+    app: manage-contacts
+
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pgadmin-manage-contacts
+    spec:
+      containers:
+        - name: pgadmin-manage-contacts
+          image: dpage/pgadmin4
+          env:
+            - name: PGADMIN_DEFAULT_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: db-secrets
+                  key: PGADMIN_DEFAULT_EMAIL
+            - name: PGADMIN_DEFAULT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secrets
+                  key: PGADMIN_DEFAULT_PASSWORD
+    
+  selector:
+    matchLabels:
+      app: pgadmin-manage-contacts
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgadmin
+  labels:
+    app: pgadmin
+
+spec:
+  selector:
+    app: pgadmin-manage-contacts
+  type: NodePort
+  # type: LoadBalancer 
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30491

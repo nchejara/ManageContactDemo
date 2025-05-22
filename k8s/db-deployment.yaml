@@ -1,0 +1,92 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+      
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+  labels:
+    app: manage-contacts
+
+spec:
+
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: database-manage-contacts
+
+  template:
+
+    metadata:
+      labels:
+        app: database-manage-contacts
+
+    spec:
+      containers:
+      - name: database-manage-contacts
+        image: postgres:latest
+        envFrom: # Get env from config map
+          - configMapRef:
+              name: db-config
+
+        # env:
+        # - name: "POSTGRES_USER"
+        #   valueFrom:
+              # configMapKeyRef:
+              #   name: db-config
+              #   key: POSTGRES_USER
+        # - name: POSTGRES_PASSWORD
+        #   value: admin
+        # - name: POSTGRES_DB
+        #   value: manage_contacts
+
+        env: # Get env from sercrets file
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-secrets
+                key: POSTGRES_USER
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-secrets
+                key: POSTGRES_PASSWORD
+
+        volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: postgres-storage
+
+      volumes:
+        - name: postgres-storage  
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: database 
+  labels:
+    app: database
+
+spec:
+
+  selector:
+    app: database-manage-contacts
+    
+  type: ClusterIP
+
+  ports:
+    - port: 5432
+      targetPort: 5432
