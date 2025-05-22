@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-manage-contact
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: test.managecontacts.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/login"
+        backend:
+          service:
+            name: pgadmin
+            port: 
+              number: 80

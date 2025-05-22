@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    app: manage-contacts
+
+spec:
+
+    replicas: 2
+    
+    selector:
+      matchLabels:
+        app: manage-contacts
+
+    template:
+    
+      metadata:
+        labels:
+          app: manage-contacts
+      spec:
+        containers:
+          - name: frontend
+            image: pchejara/manage_contact_app:1.0
+            env:
+              - name: DB_HOST
+                value: database.default.svc.cluster.local
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  labels:
+    app: manage-contacts
+
+spec:
+  selector:
+    app: manage-contacts
+    
+  type: NodePort
+  # type: LoadBalancer 
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30490 # Optional
+
