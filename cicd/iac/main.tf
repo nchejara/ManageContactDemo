@@ -92,7 +92,7 @@ resource "aws_ecs_task_definition" "my_task" {
   network_mode = "brige"
   cpu = "256"
   memory = "512"
-  container_definitions = jsondecode([
+  container_definitions = jsonencode([
     {
       "name": "mc_app",
       "image": var.image_name,

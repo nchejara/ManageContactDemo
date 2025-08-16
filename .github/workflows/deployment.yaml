@@ -89,6 +89,7 @@ jobs:
           postgres_password="admin"
           postgres_db="manage_contacts"
           EOL
+          cat /cicd/iac/terraform.tfvars
       
       # Terraform Init
       - name: Terraform Init
@@ -96,6 +97,12 @@ jobs:
         run: |
           echo "Running terraform init command ..."
           terraform init
+          
+      - name: Terraform Plan
+        working-directory: ./cicd/iac
+        run: |
+          echo "Running 'terraform plan' command ..."
+          terraform plan
 
       - name: Terraform apply
         working-directory: ./cicd/iac
