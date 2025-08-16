@@ -94,9 +94,11 @@ jobs:
       - name: Terraform Init
         run: |
           echo "Running terraform init command ..."
+          working-directory: ./cicd/iac
           terraform init
 
       - name: Terraform apply
         run: |
           echo "Running 'terraform apply' command ..."
+          working-directory: ./cicd/iac
           terraform apply --auto-approve
