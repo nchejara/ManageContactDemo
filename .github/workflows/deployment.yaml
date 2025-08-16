@@ -92,13 +92,26 @@ jobs:
       
       # Terraform Init
       - name: Terraform Init
+        working-directory: ./cicd/iac
         run: |
           echo "Running terraform init command ..."
-          working-directory: ./cicd/iac
           terraform init
 
       - name: Terraform apply
+        working-directory: ./cicd/iac
         run: |
           echo "Running 'terraform apply' command ..."
-          working-directory: ./cicd/iac
           terraform apply --auto-approve
+
+      - name: Waiting 5 minutes for you to check resource before destroy
+        run: |
+          echo "Finish checking resource in 5 minutes"
+          sleep 300
+          echo "Continuing now"
+
+      - name: Terraform destroy
+        working-directory: ./cicd/iac
+        run: |
+          echo "Running 'terraform destroy' command ..."
+          terraform destroy --auto-approve
+      
