@@ -83,7 +83,7 @@ jobs:
 
       - name: Generate terraform.tfvars
         run: |
-          cat > ./iac/terraform.tfvars <<EOL
+          cat > ./cicd/iac/terraform.tfvars <<EOL
           image_name = "$ECR_REPOSITORY_URL"
           postgres_user="Naren"
           postgres_password="admin"
