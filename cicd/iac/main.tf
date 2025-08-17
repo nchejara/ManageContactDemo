@@ -181,7 +181,7 @@ resource "aws_instance" "ecs_instance" {
       # "sudo systemctl start docker",
       # "sudo usermod -aG docker ubuntu",
 
-      # "echo 'ECS_CLUSTER=my_cluster' | sudo tee -a /etc/ecs/ecs.config"
+      # "echo 'ECS_CLUSTER=default' | sudo tee -a /etc/ecs/ecs.config"
 
   #   ]
   # }
