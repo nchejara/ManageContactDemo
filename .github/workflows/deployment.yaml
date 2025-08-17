@@ -64,7 +64,7 @@ jobs:
           docker build -t $ECR_REPOSITORY:$IMAGE_TAG .
           AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
           echo "AWS_ACCOUNT_ID = $AWS_ACCOUNT_ID"
-          REPOSITORY_URL="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com"
+          REPOSITORY_URL="$AWS_ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com"
           echo "REPOSITORY_URL = $REPOSITORY_URL"
           docker tag $ECR_REPOSITORY:$IMAGE_TAG $REPOSITORY_URL/$ECR_REPOSITORY:$IMAGE_TAG
           # Login to ECR
