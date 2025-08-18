@@ -11,9 +11,9 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "random_id" "suffix" {
-  byte_length = 6
-}
+# resource "random_id" "suffix" {
+#   byte_length = 6
+# }
 
 resource "aws_vpc" "this" {
   cidr_block = "176.0.0.0/16"
@@ -54,12 +54,12 @@ resource "aws_route_table_association" "public1_assoc" {
 resource "aws_security_group" "ecs_sg" {
   vpc_id = aws_vpc.this.id
 
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+  # ingress {
+  #   from_port   = 22
+  #   to_port     = 22
+  #   protocol    = "tcp"
+  #   cidr_blocks = ["0.0.0.0/0"]
+  # }
   ingress {
     from_port   = 3000
     to_port     = 3000
@@ -117,20 +117,20 @@ resource "aws_iam_instance_profile" "ecs_instance_profile" {
 }
 
 ### Key pair [optional]
-resource "tls_private_key" "key_rsa" {
-  algorithm = "RSA"
-  rsa_bits = 4096
-}
+# resource "tls_private_key" "key_rsa" {
+#   algorithm = "RSA"
+#   rsa_bits = 4096
+# }
 
-resource "aws_key_pair" "iac_key" {
-  key_name = "iac_key"
-  public_key = tls_private_key.key_rsa.public_key_openssh
-}
+# resource "aws_key_pair" "iac_key" {
+#   key_name = "iac_key"
+#   public_key = tls_private_key.key_rsa.public_key_openssh
+# }
 
-resource "local_file" "local_iac_key" {
-  content = tls_private_key.key_rsa.private_key_pem
-  filename = "${path.cwd}/iac_key.pem"
-}
+# resource "local_file" "local_iac_key" {
+#   content = tls_private_key.key_rsa.private_key_pem
+#   filename = "${path.cwd}/iac_key.pem"
+# }
 
 data "aws_ami" "amazon" {
   most_recent = true
@@ -147,7 +147,7 @@ resource "aws_instance" "ecs_instance" {
   instance_type = "t2.micro"
   subnet_id = aws_subnet.public_subnet.id
   security_groups = [aws_security_group.ecs_sg.id]
-  key_name = "iac_key"
+  # key_name = "iac_key"
   iam_instance_profile = aws_iam_instance_profile.ecs_instance_profile.name
 
   # For base AWS AMI, You have to install docker, ecs-agent and launch ecs-agent container
@@ -194,9 +194,9 @@ resource "aws_instance" "ecs_instance" {
   # }
 }
 
-resource "aws_s3_bucket" "app_bucket" {
-  bucket = "manage-contact-app-${random_id.suffix.hex}"
-}
+# resource "aws_s3_bucket" "app_bucket" {
+#   bucket = "manage-contact-app-${random_id.suffix.hex}"
+# }
 
 resource "aws_ecs_cluster" "my_cluster" {
   name = "default"
